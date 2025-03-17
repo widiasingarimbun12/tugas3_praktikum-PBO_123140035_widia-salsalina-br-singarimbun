@@ -1,3 +1,7 @@
+#Nama :Widia Salsalina Br Singarimbun
+#NIM  :123140035
+PBO
+
 import math #mengimpor library math,krna kita membutuhkan logaritma
 
 #untuk meginisialisasi objek kalkulator dengan float(nilai numerik)
