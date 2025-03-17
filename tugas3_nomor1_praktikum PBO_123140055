@@ -1,0 +1,61 @@
+import math #mengimpor library math,krna kita membutuhkan logaritma
+
+#untuk meginisialisasi objek kalkulator dengan float(nilai numerik)
+class Kalkulator:
+    def __init__(self, nilai):     #pada self.nilai fungsinya utk menyimpan angka yg dimasukn user
+        self.nilai = float(nilai)  #float(nilai) fungsinya meastikn angknya dlm btk desimal
+    
+    #menjumlahkan angka
+    #retun Kalkulator fungsinya untuk membuat objek abru untuk menyimpan hasilnya
+    def __add__(self, other):
+        return Kalkulator(self.nilai + other.nilai)
+        
+    #untuk pengurangan pada kedua angka yg dimasukkan    
+    def __sub__(self, other):
+        return Kalkulator(self.nilai - other.nilai)
+        
+    #untuk mencari hasil perkalian dari kedua angka yg dimasukkan    
+    def __mul__(self, other):
+        return Kalkulator(self.nilai * other.nilai)
+      
+     #untuk mencari hasil pada pembagian kedua angka yg dimasukkan
+     #dan fungsi other.nilai ==0:untuk membri tahu agar tidak dpt membagikn dengan nol
+    def __truediv__(self,other):
+        if other.nilai ==0:
+            return "kesalahan:tidak dpat membagikan dengan nol."
+        return Kalkulator(self.nilai / other.nilai)
+        
+    #untuk mencari hasil perpangkatan dari kedua angka yg dimsukkan    
+    def __pow__(self, other):
+        return Kalkulator(self.nilai ** other.nilai)
+        
+    #unutk menghitung logaritma (1n(x))
+    #dan fungsi self.nilai <= 0:untuk memberi tahu bahwa logaritma tidak bisa angka negartif dan nol
+    def logaritma(self):
+        if self.nilai <= 0:
+            return "Kesalahan: logaritma hanya untuk angka positif."
+        return Kalkulator(math.log(self.nilai))
+    
+    def __str__(self):
+        return str(self.nilai)
+        
+#fungsi ini dijlnkan jika file dieksekusi langsung.supaya kode dibawah
+#tidk dieksekusi jika file diimpor sebagai modul
+if __name__ == "__main__":    
+    #meminta input dari pengguna utk memasukkn angka yang diinginkan       
+    A = float(input("masukkan angka pertama:"))
+    B = float(input("masukkan angka kedua:"))
+    
+    #membuat objek Kalkulator
+    angka1 = Kalkulator(A)
+    angka2 = Kalkulator(B)
+    
+    #menmapilkan hasil perhitungan yang dijalnkan 
+    print (f"hasil {A} + {B} = {angka1 + angka2}")
+    print (f"hasil {A} - {B} = {angka1 - angka2}")
+    print (f"hasil {A} * {B} = {angka1 * angka2}")
+    print (f"hasil {A} / {B} = {angka1 / angka2}")
+    print (f"hasil {A} ** {B} = {angka1 ** angka2}")
+    print (f"hasil log({A}) = {angka1.logaritma()}")
+        
+         
