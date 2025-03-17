@@ -1,0 +1,93 @@
+#Nama :Widia Salsalina Br Singarimbun
+#NIM  :123140035
+#praktikum PBO 
+
+import random  # Mengimpor modul random untuk pemilihan alel secara acak
+
+# Kelas Ayah (Father)
+class Ayah:
+    def __init__(self, golongan_darah):
+        self.golongan_darah = self.ubah_ab(golongan_darah)
+
+    # Fungsi untuk menangani kasus jika ada alel "AB"
+    #yang dimn golongan darah bisa berupa AB yg sebenrnya adalh kombinasi dri["A", "B"]
+    #nah, jika ada gol darah yg "AB" maka akan dipecah mnjdi "A", "B"
+    #karena pewarisan sifat dilknk berdskan alel,bukn gol darah langsung.
+    
+    def ubah_ab(self, golongan_darah):
+        hasil = []
+        for alel in golongan_darah:
+            if alel == "AB":
+                hasil.extend(["A", "B"])  # "AB" dipecah menjadi dua alel: "A" dan "B"
+            else:
+                hasil.append(alel)
+        return hasil
+
+# Kelas Ibu (Mother)
+class Ibu:
+    def __init__(self, golongan_darah):
+        self.golongan_darah = self.ubah_ab(golongan_darah)
+
+    # Fungsi yang sama seperti di kelas Ayah, untuk menangani "AB"
+    def ubah_ab(self, golongan_darah):
+        hasil = []
+        for alel in golongan_darah:
+            if alel == "AB":
+                hasil.extend(["A", "B"])
+            else:
+                hasil.append(alel)
+        return hasil
+
+# Kelas Anak (Child)
+class Anak:
+    def __init__(self, ayah, ibu):
+        # Memilih satu alel secara acak dari ayah dan ibu
+        #fungsi random.choice dignkn untk pemilihan alel acak(probabilitas acak 50-50)
+        self.golongan_darah = [
+            random.choice(ayah.golongan_darah),
+            random.choice(ibu.golongan_darah)
+        ]
+    
+    # Fungsi untuk menentukan golongan darah anak berdasarkan kombinasi alel yang diperoleh
+    def tentukan_golongan_darah(self):
+        kombinasi_alel = set(self.golongan_darah)  # Mengubah list menjadi set supya lebih mudah dicek
+
+        if kombinasi_alel == {"A", "B"}:
+            return "AB"
+        elif "A" in kombinasi_alel:
+            return "A"
+        elif "B" in kombinasi_alel:
+            return "B"
+        else:
+            return "O"
+
+# Daftar alel yg hanya boleh di validasi input
+alel_valid = {"A", "B", "O", "AB"}
+
+# Fungsi ini supaya pengguna tidak slah memasukkan data
+#hanya {"A", "B", "O", "AB"} yg boleh
+#kalo salah maka pengguna akan diminta masukkan ulang
+def ambil_input_valid(pesan):
+    while True:
+        data_masuk = input(pesan).strip().upper().split()
+        if len(data_masuk) == 2 and all(alel in alel_valid for alel in data_masuk):
+            return data_masuk
+        else:
+            print("Input tidak valid! Masukkan dua alel dengan kombinasi A, B, O, atau AB. Contoh: 'A AB'")
+
+# Meminta pengguna buat masukkan alel gol darah ayah dan ibu
+ayah_input = ambil_input_valid("Masukkan alel golongan darah ayah (contoh: 'B AB'): ")
+ibu_input = ambil_input_valid("Masukkan alel golongan darah ibu (contoh: 'A AB'): ")
+
+#  objek ayah, ibu, dan anak 
+ayah = Ayah(ayah_input)
+ibu = Ibu(ibu_input)
+anak = Anak(ayah, ibu)
+
+# Menampilkan hasil pewarisan golongan darah
+#setiap program yg dijlnkan hasilnya akan berbeda,karena pewarisan alel dilakukn secara acak
+print("\n=== Hasil Pewarisan Golongan Darah ===")
+print(f"Alel ayah  : {ayah.golongan_darah}")
+print(f"Alel ibu   : {ibu.golongan_darah}")
+print(f"Alel anak  : {anak.golongan_darah}")
+print(f"Golongan darah anak: {anak.tentukan_golongan_darah()}")
